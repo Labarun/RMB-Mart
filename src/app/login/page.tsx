@@ -89,8 +89,8 @@ export default function LoginPage() {
               <Label htmlFor="login-email" className="text-sm font-medium">
                 Email Address
               </Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <div className="relative flex items-center">
+                <Mail className="absolute left-3 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="login-email"
                   type="email"
@@ -111,8 +111,8 @@ export default function LoginPage() {
               <Label htmlFor="login-password" className="text-sm font-medium">
                 Password
               </Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <div className="relative flex items-center">
+                <Lock className="absolute left-3 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="login-password"
                   type={showPassword ? "text" : "password"}
@@ -123,7 +123,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="absolute right-3 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? (

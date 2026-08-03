@@ -18,6 +18,7 @@ enum PayoutType {
 
 enum OrderStatus {
   PENDING
+  AWAITING_VERIFICATION
   PROCESSING
   COMPLETED
   REFUNDED

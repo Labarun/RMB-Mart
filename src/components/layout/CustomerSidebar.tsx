@@ -12,8 +12,11 @@ import {
   LogOut,
   User as UserIcon,
   Menu,
+  ArrowLeftRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+import { ThemeToggle } from "./ThemeToggle";
 
 interface SidebarContentProps {
   userName: string;
@@ -98,35 +101,32 @@ export function CustomerSidebar({ userName, userEmail }: { userName: string; use
 
   return (
     <>
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-64 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex-shrink-0 flex-col">
-        <SidebarContent userName={userName} userEmail={userEmail} />
-      </aside>
-
-      {/* Mobile Header + Sidebar Sheet */}
-      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-alipay flex items-center justify-center">
-            <span className="text-white font-bold text-lg">R</span>
+      {/* Header + Sidebar Sheet for all screen sizes */}
+      <div className="flex w-full items-center justify-between px-4 py-3 bg-slate-950 border-b border-slate-800">
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-xl gradient-alipay flex items-center justify-center">
+            <ArrowLeftRight className="text-white w-4 h-4" />
           </div>
-          <span className="font-heading font-bold text-lg tracking-tight text-slate-900 dark:text-white">
+          <span className="font-heading font-bold text-lg tracking-tight text-white">
             RMB<span className="text-alipay">mart</span>
           </span>
         </Link>
 
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger
-            className="md:hidden"
-            render={
-              <Button variant="ghost" size="icon" className="rounded-xl">
-                <Menu className="w-5 h-5" />
-              </Button>
-            }
-          />
-          <SheetContent side="left" className="w-72 p-0 bg-white dark:bg-slate-950">
-            <SidebarContent userName={userName} userEmail={userEmail} onNavigate={() => setOpen(false)} />
-          </SheetContent>
-        </Sheet>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger
+              render={
+                <Button variant="ghost" size="icon" className="rounded-xl text-white hover:bg-slate-800">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              }
+            />
+            <SheetContent side="left" className="w-72 p-0 bg-slate-950 border-slate-800">
+              <SidebarContent userName={userName} userEmail={userEmail} onNavigate={() => setOpen(false)} />
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </>
   );

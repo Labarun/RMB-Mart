@@ -96,8 +96,8 @@ export default function RegisterPage() {
               <Label htmlFor="register-name" className="text-sm font-medium">
                 Full Name
               </Label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <div className="relative flex items-center">
+                <User className="absolute left-3 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="register-name"
                   placeholder="John Doe"
@@ -117,8 +117,8 @@ export default function RegisterPage() {
               <Label htmlFor="register-email" className="text-sm font-medium">
                 Email Address
               </Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <div className="relative flex items-center">
+                <Mail className="absolute left-3 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="register-email"
                   type="email"
@@ -142,8 +142,8 @@ export default function RegisterPage() {
                   (optional)
                 </span>
               </Label>
-              <div className="relative">
-                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <div className="relative flex items-center">
+                <Phone className="absolute left-3 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="register-phone"
                   placeholder="024 XXX XXXX"
@@ -166,8 +166,8 @@ export default function RegisterPage() {
               >
                 Password
               </Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <div className="relative flex items-center">
+                <Lock className="absolute left-3 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="register-password"
                   type={showPassword ? "text" : "password"}
@@ -178,7 +178,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="absolute right-3 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? (
@@ -203,8 +203,8 @@ export default function RegisterPage() {
               >
                 Confirm Password
               </Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <div className="relative flex items-center">
+                <Lock className="absolute left-3 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="register-confirm"
                   type={showPassword ? "text" : "password"}

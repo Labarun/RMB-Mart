@@ -12,6 +12,7 @@ interface OrderFiltersProps {
 const statuses = [
   { value: "ALL", label: "All" },
   { value: "PENDING", label: "Pending" },
+  { value: "AWAITING_VERIFICATION", label: "Verifying" },
   { value: "PROCESSING", label: "Processing" },
   { value: "COMPLETED", label: "Completed" },
   { value: "REFUNDED", label: "Refunded" },

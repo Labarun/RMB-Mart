@@ -14,7 +14,7 @@ export default async function CustomerLayout({
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col md:flex-row">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col">
       <CustomerSidebar
         userName={session.user.name || "User"}
         userEmail={session.user.email || ""}

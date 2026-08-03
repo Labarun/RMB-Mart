@@ -105,39 +105,53 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
         ) : (
-          <div className="bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left">
-                <thead className="text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/50 uppercase border-b border-slate-200 dark:border-slate-800">
-                  <tr>
-                    <th className="px-6 py-4 font-medium">Order ID</th>
-                    <th className="px-6 py-4 font-medium">Date</th>
-                    <th className="px-6 py-4 font-medium">Amount (RMB)</th>
-                    <th className="px-6 py-4 font-medium">Amount (GHS)</th>
-                    <th className="px-6 py-4 font-medium">Status</th>
-                    <th className="px-6 py-4 font-medium text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-                  {orders.map((order) => (
-                    <tr key={order.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
-                      <td className="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{order.orderNumber}</td>
-                      <td className="px-6 py-4 text-slate-500 dark:text-slate-400">{format(order.createdAt, "MMM d, yyyy")}</td>
-                      <td className="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">¥{order.amountRmb.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
-                      <td className="px-6 py-4 text-slate-500 dark:text-slate-400">GH₵{order.amountGhs.toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
-                      <td className="px-6 py-4">
-                        <OrderStatusBadge status={order.status} />
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <Link href={`/orders/${order.id}`}>
-                          <Button variant="ghost" size="sm" className="h-8">Details</Button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          <div className="grid gap-4">
+            {orders.map((order) => (
+              <Link key={order.id} href={`/orders/${order.id}`} className="block group">
+                <Card className="clay-card border-none bg-white dark:bg-slate-950 hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-5">
+                    <div className="flex flex-col md:flex-row md:items-center gap-4">
+                      
+                      {/* Left: ID & Date */}
+                      <div className="md:w-1/4">
+                        <p className="font-medium text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                          {order.orderNumber}
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-1 flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5" />
+                          {format(order.createdAt, "MMM d, yyyy • HH:mm")}
+                        </p>
+                      </div>
+
+                      {/* Middle: Amount & Payout */}
+                      <div className="md:w-1/3 flex items-center gap-6">
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">You Send</p>
+                          <p className="font-medium text-slate-900 dark:text-slate-100">GH₵{order.amountGhs.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                        </div>
+                        <div className="h-8 w-[1px] bg-slate-200 dark:bg-slate-800"></div>
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">They Get</p>
+                          <p className="font-heading font-bold text-lg text-alipay">¥{order.amountRmb.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                        </div>
+                      </div>
+
+                      {/* Right: Status & Action */}
+                      <div className="md:w-5/12 flex items-center justify-between md:justify-end gap-4 mt-2 md:mt-0 pt-4 md:pt-0 border-t md:border-t-0 border-slate-100 dark:border-slate-800">
+                        <div className="flex flex-col items-start md:items-end gap-1">
+                          <OrderStatusBadge status={order.status} />
+                          <span className="text-xs text-muted-foreground capitalize">Via {order.payoutType.toLowerCase()}</span>
+                        </div>
+                        <div className="w-8 h-8 rounded-full bg-slate-50 dark:bg-slate-900 group-hover:bg-alipay/10 group-hover:text-alipay flex items-center justify-center transition-colors text-slate-400">
+                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                        </div>
+                      </div>
+
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
           </div>
         )}
       </div>

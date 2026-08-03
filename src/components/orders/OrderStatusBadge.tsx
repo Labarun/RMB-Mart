@@ -15,6 +15,12 @@ export function OrderStatusBadge({ status, className }: OrderStatusBadgeProps) {
           Pending Payment
         </Badge>
       );
+    case "AWAITING_VERIFICATION":
+      return (
+        <Badge variant="outline" className={cn("bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/50 dark:text-indigo-400 dark:border-indigo-900/50", className)}>
+          Awaiting Verification
+        </Badge>
+      );
     case "PROCESSING":
       return (
         <Badge variant="outline" className={cn("bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/50 dark:text-blue-400 dark:border-blue-900/50", className)}>

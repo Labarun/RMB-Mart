@@ -48,10 +48,11 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
       );
     }
 
-    // Update the order with the receipt URL and/or Transaction ID
+    // Update the order with the receipt URL and/or Transaction ID, and change status
     await prisma.order.update({
       where: { id: orderId },
       data: { 
+        status: "AWAITING_VERIFICATION",
         ...(receiptUrl ? { recipientQrUrl: receiptUrl } : {}),
         ...(transactionId ? { momoTransactionId: transactionId } : {}),
       },

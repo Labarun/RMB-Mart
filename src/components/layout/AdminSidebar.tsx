@@ -12,8 +12,12 @@ import {
   ShieldCheck,
   Users,
   Menu,
+  UserCog,
+  BarChart3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+import { ThemeToggle } from "./ThemeToggle";
 
 interface AdminSidebarContentProps {
   userName: string;
@@ -23,8 +27,10 @@ interface AdminSidebarContentProps {
 
 const adminLinks = [
   { href: "/admin", icon: LayoutDashboard, label: "Overview & Orders" },
+  { href: "/admin/analytics", icon: BarChart3, label: "Analytics" },
   { href: "/admin/customers", icon: Users, label: "Customers" },
   { href: "/admin/settings", icon: Settings, label: "Platform Settings" },
+  { href: "/admin/profile", icon: UserCog, label: "My Profile" },
 ];
 
 function AdminSidebarContent({ userName, userEmail, onNavigate }: AdminSidebarContentProps) {
@@ -95,13 +101,8 @@ export function AdminSidebar({ userName, userEmail }: { userName: string; userEm
 
   return (
     <>
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-64 bg-slate-950 text-slate-300 flex-shrink-0 flex-col">
-        <AdminSidebarContent userName={userName} userEmail={userEmail} />
-      </aside>
-
-      {/* Mobile Header + Sidebar Sheet */}
-      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-slate-950 border-b border-slate-800">
+      {/* Header + Sidebar Sheet for all screen sizes */}
+      <div className="flex w-full items-center justify-between px-4 py-3 bg-slate-950 border-b border-slate-800">
         <Link href="/admin" className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center">
             <ShieldCheck className="text-white w-4 h-4" />
@@ -111,19 +112,21 @@ export function AdminSidebar({ userName, userEmail }: { userName: string; userEm
           </span>
         </Link>
 
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger
-            className="md:hidden"
-            render={
-              <Button variant="ghost" size="icon" className="rounded-xl text-white hover:bg-slate-800">
-                <Menu className="w-5 h-5" />
-              </Button>
-            }
-          />
-          <SheetContent side="left" className="w-72 p-0 bg-slate-950 border-slate-800">
-            <AdminSidebarContent userName={userName} userEmail={userEmail} onNavigate={() => setOpen(false)} />
-          </SheetContent>
-        </Sheet>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger
+              render={
+                <Button variant="ghost" size="icon" className="rounded-xl text-white hover:bg-slate-800">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              }
+            />
+            <SheetContent side="left" className="w-72 p-0 bg-slate-950 border-slate-800">
+              <AdminSidebarContent userName={userName} userEmail={userEmail} onNavigate={() => setOpen(false)} />
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </>
   );
