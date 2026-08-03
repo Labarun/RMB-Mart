@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum PayoutType {
+  ALIPAY
+  WECHAT
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  REFUNDED
+  CANCELLED
+}
+
+enum KycStatus {
+  UNVERIFIED
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  phone          String?
+  passwordHash   String
+  role           Role      @default(CUSTOMER)
+  kycStatus      KycStatus @default(UNVERIFIED)
+  kycDocumentUrl String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  orders          Order[]
+  rateUpdates     ExchangeRate[]
+  auditLogs       AuditLog[]
+  paymentSettings PaymentSettings[]
+  siteSettings    SiteSettings[]
+  messages        OrderMessage[]
+
+  @@map("users")
+}
+
+model ExchangeRate {
+  id           String   @id @default(cuid())
+  rateGhsToRmb Float
+  updatedBy    String
+  updatedAt    DateTime @default(now())
+
+  admin User @relation(fields: [updatedBy], references: [id])
+
+  @@map("exchange_rates")
+}
+
+model Order {
+  id                 String      @id @default(cuid())
+  orderNumber        String      @unique // e.g., "RMB-7050"
+  userId             String
+  amountGhs          Float
+  amountRmb          Float
+  rateUsed           Float
+  payoutType         PayoutType
+  recipientName      String
+  recipientAccountId String
+  recipientQrUrl     String?
+  status             OrderStatus @default(PENDING)
+  externalTxnId      String?
+  momoTransactionId  String?
+  adminNotes         String?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  user      User           @relation(fields: [userId], references: [id])
+  auditLogs AuditLog[]
+  messages  OrderMessage[]
+
+  @@map("orders")
+}
+
+model OrderMessage {
+  id        String   @id @default(cuid())
+  orderId   String
+  userId    String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id])
+
+  @@map("order_messages")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  orderId   String
+  adminId   String
+  action    String // e.g., "STATUS_CHANGE: PENDING → COMPLETED"
+  details   String? // JSON or text with extra context
+  createdAt DateTime @default(now())
+
+  order Order @relation(fields: [orderId], references: [id])
+  admin User  @relation(fields: [adminId], references: [id])
+
+  @@map("audit_logs")
+}
+
+model PaymentSettings {
+  id              String   @id @default(cuid())
+  momoName        String
+  momoNumber      String
+  momoNetwork     String   @default("MTN")
+  instructions    String?  @db.Text
+  isActive        Boolean  @default(true)
+  updatedBy       String
+  updatedAt       DateTime @default(now())
+
+  admin User @relation(fields: [updatedBy], references: [id])
+
+  @@map("payment_settings")
+}
+
+model SiteSettings {
+  id                  String   @id @default(cuid())
+  announcementText    String?  @db.Text
+  announcementEnabled Boolean  @default(false)
+  supportWhatsapp     String?
+  supportEmail        String?
+  updatedBy           String
+  updatedAt           DateTime @default(now())
+
+  admin User @relation(fields: [updatedBy], references: [id])
+
+  @@map("site_settings")
+}
