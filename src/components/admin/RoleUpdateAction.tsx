@@ -43,19 +43,19 @@ export function RoleUpdateAction({ userId, currentRole, userName }: RoleUpdateAc
 
   return (
     <Select value={currentRole} onValueChange={handleRoleChange} disabled={isUpdating}>
-      <SelectTrigger className="h-8 text-xs bg-slate-900/50 border-slate-800 text-slate-300 w-[120px]">
+      <SelectTrigger className="h-8 text-xs bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 w-[120px]">
         <SelectValue placeholder="Select Role" />
       </SelectTrigger>
-      <SelectContent className="bg-slate-950 border-slate-800 text-slate-300">
+      <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
         <SelectItem value="CUSTOMER">
           <div className="flex items-center gap-2">
-            <User className="w-3 h-3 text-slate-400" />
+            <User className="w-3 h-3 text-slate-500 dark:text-slate-400" />
             Customer
           </div>
         </SelectItem>
         <SelectItem value="ADMIN">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-3 h-3 text-emerald-400" />
+            <ShieldCheck className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
             Admin
           </div>
         </SelectItem>

@@ -24,10 +24,10 @@ export function UserFilter() {
   return (
     <div className="flex flex-col sm:flex-row gap-3">
       <Select value={currentRole} onValueChange={(val) => handleFilterChange("role", val)}>
-        <SelectTrigger className="w-[160px] h-10 bg-slate-900 border-slate-800 text-slate-200">
+        <SelectTrigger className="w-[160px] h-10 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-200">
           <SelectValue placeholder="Filter Role" />
         </SelectTrigger>
-        <SelectContent className="bg-slate-950 border-slate-800 text-slate-300">
+        <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
           <SelectItem value="ALL">All Roles</SelectItem>
           <SelectItem value="CUSTOMER">Customers Only</SelectItem>
           <SelectItem value="ADMIN">Admins Only</SelectItem>
@@ -35,10 +35,10 @@ export function UserFilter() {
       </Select>
 
       <Select value={currentKyc} onValueChange={(val) => handleFilterChange("kyc", val)}>
-        <SelectTrigger className="w-[160px] h-10 bg-slate-900 border-slate-800 text-slate-200">
+        <SelectTrigger className="w-[160px] h-10 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-200">
           <SelectValue placeholder="Filter KYC Status" />
         </SelectTrigger>
-        <SelectContent className="bg-slate-950 border-slate-800 text-slate-300">
+        <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
           <SelectItem value="ALL">All Statuses</SelectItem>
           <SelectItem value="VERIFIED">Verified</SelectItem>
           <SelectItem value="UNVERIFIED">Unverified</SelectItem>
